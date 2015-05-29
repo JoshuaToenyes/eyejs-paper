@@ -1,0 +1,305 @@
+\documentclass{sigchi}
+
+% Use this command to override the default ACM copyright statement
+% (e.g. for preprints).  Consult the conference website for the
+% camera-ready copyright statement.
+
+
+%% EXAMPLE BEGIN -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
+% \toappear{Permission to make digital or hard copies of all or part of this work for personal or classroom use is      granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. \\
+% {\emph{CHI'14}}, April 26--May 1, 2014, Toronto, Canada. \\
+% Copyright \copyright~2014 ACM ISBN/14/04...\$15.00. \\
+% DOI string from ACM form confirmation}
+%% EXAMPLE END -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
+
+
+% Arabic page numbers for submission.  Remove this line to eliminate
+% page numbers for the camera ready copy
+
+%\pagenumbering{arabic}
+
+% Load basic packages
+\usepackage{balance}  % to better equalize the last page
+\usepackage{graphics} % for EPS, load graphicx instead
+%\usepackage[T1]{fontenc}
+\usepackage{txfonts}
+\usepackage{times}    % comment if you want LaTeX's default font
+\usepackage[pdftex]{hyperref}
+% \usepackage{url}      % llt: nicely formatted URLs
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{ccicons}
+\usepackage{color,soul}
+\usepackage{listings}
+
+% llt: Define a global style for URLs, rather that the default one
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+
+% To make various LaTeX processors do the right thing with page size.
+\def\pprw{8.5in}
+\def\pprh{11in}
+\special{papersize=\pprw,\pprh}
+\setlength{\paperwidth}{\pprw}
+\setlength{\paperheight}{\pprh}
+\setlength{\pdfpagewidth}{\pprw}
+\setlength{\pdfpageheight}{\pprh}
+
+% Make sure hyperref comes last of your loaded packages, to give it a
+% fighting chance of not being over-written, since its job is to
+% redefine many LaTeX commands.
+\definecolor{linkColor}{RGB}{6,125,233}
+\hypersetup{%
+  pdftitle={SIGCHI Conference Proceedings Format},
+  pdfauthor={LaTeX},
+  pdfkeywords={SIGCHI, proceedings, archival format},
+  bookmarksnumbered,
+  pdfstartview={FitH},
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=linkColor,
+  breaklinks=true,
+}
+
+% create a shortcut to typeset table headings
+% \newcommand\tabhead[1]{\small\textbf{#1}}
+
+% End of preamble. Here it comes the document.
+\begin{document}
+
+\title{EyeJS: A Framework for Generic Eye-Tracking Interactivity for Web Browsers and Node.JS}
+
+\numberofauthors{2}
+\author{%
+  \alignauthor{Joshua R. Toenyes\\
+    \affaddr{Dept. of Computer Science and Engineering}\\
+    \affaddr{University of California San Diego}\\
+    \affaddr{La Jolla, California, USA}\\
+    \email{joshua.r.toenyes@jacobs.ucsd.edu}}\\
+  \alignauthor{Nadir Weibel\\
+    \affaddr{Dept. of Computer Science and Engineering}\\
+    \affaddr{University of California San Diego}\\
+    \affaddr{La Jolla, California, USA}\\
+    \email{weibel@ucsd.edu}}\\
+}
+
+\maketitle
+
+\begin{abstract}
+  150 words...
+\end{abstract}
+
+\keywords{eye tracking; eye events; gaze interaction; blink interaction}
+
+\category{H.5.2}{User Interfaces}{Input devices and strategies,
+    Interaction styles (gaze and blinks), Screen design}
+\category{H.5.4}{Hypertext/Hypermedia}{Architectures, Navigation}
+
+\section{Introduction}
+... We developed the framework using two eye trackers, Tobii's EyeX
+tracker and The Eye Tribe's same-named eye tracker.
+
+\section{Related Work}
+
+\section{Background...}
+
+
+
+\section{EyeJS DOM Events}
+EyeJS provides a number of DOM events which may be listened-for in
+the same manner as a native DOM event (such as \textit{mouseover}, \textit{mousemouse}, \textit{mouseout}, etc.). All EyeJS events
+"bubble up" from the source DOM Element \hl{[definition and reference]},
+so an event listener attached to some element will be called if the
+corresponding event is triggered on the element itself or any of its
+children (this is the default behavior of native events \hl{[check
+if this isn't true for any events]}). Eye events provided by EyeJS
+are described below.
+
+\subsection{\textit{gaze} Event}
+The \textit{gaze} event is fired whenever the user's gaze is over some
+element. This event is most analogous to a \textit{mousemove} event.
+Like a \textit{mousemove}, the user may actually be unaware of the
+element over-which the event is triggered. For example, if the user's
+eyes are currently executing a saccade while simultaneously being
+sampled by the eye-tracker, the user will be unaware of the element they
+are gazing at. \hl{[Lots of references about saccades and unawareness.]}
+For this reason the \textit{fixation} event is provided (see below).
+
+\subsection{\textit{gazeleave} Event}
+
+\subsection{\textit{fixation} Event}
+
+\subsection{\textit{fixationend} Event}
+
+\subsection{\textit{blink} Event}
+
+\subsection{\textit{eyesopen} Event}
+
+\subsection{\textit{eyesclose} Event}
+
+
+\section{EyeJS Framework Components}
+EyeJS is a framework which endeavors to bring eye-interactivity and
+eye-tracking data to the web browser and Node.JS using a low-cost eye
+tracker device. The framework is composed of three layers: first
+an interface with an eye-tracking device, second a WebSocket server \hl{[WebSocket reference]} which provides raw gaze and eye availability
+status data in a standardized format on a known local port, and finally
+a JavaScript library for processing the eye-tracking data and
+translating it into meaningful events in the web browser's Document
+Object Model (DOM) \hl{[citation]}. We also developed a Google
+Chrome Web Browser \hl{[citation?]} extension to enable
+eye-interactivity on all web sites \hl{[HTTPs only?]} by injecting
+the JavaScript library at page load.
+
+
+\subsection{Eye Tracker Interface}
+Eye tracking device manufacturers generally provide some type of SDK or
+interface for communicating with the device. During the course of
+development, we experimented with eye trackers from two manufacturers,
+The Eye Tribe's self named eye tracker and the EyeX tracker from Tobii.
+Each tracker has their own compatibilities and communication interfaces.
+The eye tracker interface portion of EyeJS gathers tracker-provided
+screen x and y gaze coordinates, and eye-availability (wether the
+eye-tracker is currently tracking both, only the left or right, or
+neither eyes).
+
+\subsubsection{The Eye Tribe Tracker}
+The Eye Tribe tracker is compatible with Windows 7 and 8 and Apple's Mac
+OS X with Google Android OS support in-development. SDKs are provided
+in C\#, C++ and Java, and it also has a well documented API for
+communication via a TCP interface using JSON formatted messages. We
+opted to develop a JavaScript SDK and Node.JS application to communicate
+with this device using its TCP API. This allowed all three layers
+(eye-tracker communication, WebSocket server, and on-page JS library)
+to all be written in JavaScript. This device provides raw un-smoothed
+screen gaze coordinates.
+
+\subsubsection{EyeX Tracker}
+Tobii's EyeX tracker is only compatible with Windows 7 and 8 and provides
+SDKs for .NET, C/C++, and Unity. No other type of interface is offered
+or documented making user-built SDKs in other languages impossible. To communicate with the EyeX device, we developed a lightweight C++
+application. The EyeX tracker performs a small amount of smoothing on the
+screen coordinates prior to providing them in software, although there
+is an additional SDK available (the Tobii Gaze SDK) which provides access
+to the raw, un-smoothed data. We did not use this SDK for EyeJS.
+
+
+\subsection{WebSocket and EyeJS Subprotocol}
+After the screen gaze coordinates are collected from the eye-tracker,
+they must be made available for a web-browser running on the same host.
+This is accomplished using a WebSocket server which provides lightweight
+low-latency 2-way communication between the web-browser and the server.
+The WebSocket server provides an interface running on a known port, 5225 \hl{[check the port]}, which the JavaScript library running on a web-page
+connects to.
+
+\subsubsection{EyeJS WebSocket Subprotocol}
+EyeJS communication currently occurs in only one direction, from
+the WebSocket server to client web-browsers. We did not implement
+any eye-tracker commands. The format of these messages are well
+defined and standardized
+for both the Tobii EyeX tracker and The Eye Tribe trackers. Conceivably,
+the EyeJS Framework could be extended to include other eye-trackers,
+which would only need to provided a WebSocket interface implementing
+this subprotocol. Each message is formatted as follows:
+
+\begin{lstlisting}
+{
+  // event type
+  type: 'gaze',
+
+  // millisecond timestamp
+  timestamp: < number >,
+
+  // mean gaze screen-coordinates of
+  // both left and right eyes
+  avg: {
+    x: < number >,
+    y: < number >
+  },
+
+  // left-eye gaze screen-coordinates
+  // of only left eye
+  left: {
+    x: < number >,
+    y: < number >
+  },
+
+  // right-eye gaze screen-coordinates
+  // of only left eye
+  right: {
+    x: < number >,
+    y: < number >
+  }
+
+  // true if the indicated eye is being
+  // tracked by the eye-tracker
+  available: {
+    left:   < boolean >,
+    right:  < boolean >,
+    both:   < boolean >
+  }
+}
+\end{lstlisting}
+
+
+\subsection{EyeJS JavaScript Library}
+The JavaScript library processes and converts the eye tracker data
+into meaningful events within the web-browser.
+
+\subsubsection{Data Smoothing}
+
+\subsubsection{}
+
+
+
+\section{Evaluation}
+
+\subsection{Eye Tracker Evaluation}
+... The Eye Tribe API proved especially valuable for us, as we were
+able to build a Node.JS application to communicate to the eye tracker
+...
+
+\subsection{Description of Tasks}
+
+\subsection{Results}
+
+\section{Discussion}
+
+\subsection{Limitations}
+
+\subsection{Future Work}
+
+\subsubsection{Custom Calibration Interface}
+The Eye Tribe tracker provides API access to calibration routines, so
+it is conceivable that in the future EyeJS could be extended to include
+a standardized user interface for calibrating the eye tracker.
+
+\subsubsection{Continuous Calibration}
+As eye trackers advance and presumably provide a more advanced interface
+for developers and applications, it could be possible to perform
+continuous calibration improvement of the eye-tracker by inferring
+interactions... activate some element therefore the user was probably
+looking at that element, therefore push a calibration offset point...
+
+\section{Conclusion}
+
+\section{Acknowledgments}
+
+\balance{}
+
+% REFERENCES FORMAT
+\bibliographystyle{sigchi}
+\bibliography{eyejs}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
