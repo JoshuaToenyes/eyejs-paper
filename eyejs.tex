@@ -121,7 +121,7 @@ children (this is the default behavior of native events \hl{[check
 if this isn't true for any events]}). Eye events provided by EyeJS
 are described below.
 
-\subsection{\textit{gaze} Event}
+\subsection{\textbf{\textit{gaze}} Event}
 The \textit{gaze} event is fired whenever the user's gaze is over some
 element. This event is most analogous to a \textit{mousemove} event.
 Like a \textit{mousemove}, the user may actually be unaware of the
@@ -131,17 +131,51 @@ sampled by the eye-tracker, the user will be unaware of the element they
 are gazing at. \hl{[Lots of references about saccades and unawareness.]}
 For this reason the \textit{fixation} event is provided (see below).
 
-\subsection{\textit{gazeleave} Event}
+\subsection{\textbf{\textit{gazeleave}} Event}
+The \textit{gazeleave} event is fired on an element whenever the 
+user's gaze transitions from the target element (the one firing the
+\textit{gazeleave}) to another element. The event is analogous to a \textit{mouseleave}.
 
-\subsection{\textit{fixation} Event}
+\subsection{\textbf{\textit{fixation}} Event}
+This event occurs when the user's gaze has remained fixated on a
+single element for at least 110 milliseconds \hl{[citation about 
+longest saccade duration]}. Since the sample rate of eye trackers 
+can vary, we require consecutive samples of the gaze remaining over a 
+particular element for at least 110 milliseconds to trigger this event. 
+Using this timing we are reasonably sure the user is consciously aware 
+of the element they are gazing at, and that the series of sample
+eye-tracker sample points were not taken during a saccade. (Assuming 
+the element is of reasonable size of course, as an element the size 
+of the entire screen would constantly trigger a \textit{fixation} 
+event regardless of the movement of their gaze.)
 
-\subsection{\textit{fixationend} Event}
+\subsection{\textbf{\textit{fixationend}} Event}
+The \textit{fixationend} event is triggered on an element when the 
+user's gaze transitions away from the subject element. This event is
+similar to the \textit{gazeleave} event (and indeed a \textit{gazeleave}
+event is triggered in tandem with a \textit{fixationend}), however
+it is only triggered when a full fixation occurred prior to the user's
+gaze departing the subject element.
 
-\subsection{\textit{blink} Event}
+\subsection{\textbf{\textit{blink}} Event}
+Eyes opening and closing is a constant reality of human beings. We
+constantly blink, but usually quiet quickly. The purpose of the 
+\textit{blink} event is to detect a purposeful and conscious blink. 
+In the author's [opinion?] this was best achieved by timing a blink
+to be longer than an unconscious blink, but not long enough to be 
+triggered by the eyes leaving the tracker's field of view. \hl{insert
+sentence about blink timing here.} Using this event, complete 
+hands-free use of the web-browser is possible.
 
-\subsection{\textit{eyesopen} Event}
+\subsection{\textbf{\textit{eyesopen}} Event}
+The \textit{eyesopen} event is triggered whenever both eyes transition
+from being untracked (or unavailable) to the eye tracker, to both
+being tracked (or available).
 
-\subsection{\textit{eyesclose} Event}
+\subsection{\textbf{\textit{eyesclose}} Event}
+Similar to the \textit{eyesopen} event, the \textit{eyesclose} event
+is triggered when both eyes transition from being open to closed, as
+measured by their tracking availability by the eye-tracker device.
 
 
 \section{EyeJS Framework Components}
