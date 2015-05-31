@@ -293,13 +293,101 @@ into meaningful events within the web-browser.
 
 
 \section{Evaluation}
+The accuracy and effectiveness of the EyeJS system was tested with 
+twenty volunteers, each tasked with completing four experiments.
 
-\subsection{Eye Tracker Evaluation}
-... The Eye Tribe API proved especially valuable for us, as we were
-able to build a Node.JS application to communicate to the eye tracker
-...
+\subsection{Evaluation Equipment}
+The evaluation was conducted on a Macbook Pro (running Windows 7) 
+using a Tobii EyeX eye tracker. The web browser used was Google Chrome,
+and the Chrome plugin component of EyeJS was installed and running for
+all experiments. A Node.JS application was installed
+and running to collect user data and statistics during the 
+experiments, and a Node.JS-based web server was running as an interface
+to collect the user's information, a post-experiment server, and to
+serve some of the experiments.
 
-\subsection{Description of Tasks}
+We choose to use the Tobii EyeX eye tracker to conduct the trials
+because in our subjective experience developing EyeJS, it proved to 
+be more accurate than The Eye Tribe eye tracker. Additionally, the 
+EyeX tracker was far more forgiving when it came to user movement
+during usage. In our experience, The Eye Tribe would require multiple 
+re-calibrations during use to maintain accuracy while the EyeX 
+tracker did not suffer this inconvenience. However, we did 
+not conduct any trials to specifically measure the performance 
+difference between the two.
+
+\subsection{Input Modalities}
+Three of the four experiments were accomplished three times (with 
+minor variations each time), once using a trackpad as their
+primary input, once using EyeJS with keypress activation (the 
+left control-key) to click and select elements, and once using 
+blinks to activate and select elements. The fourth experiment 
+only used the trackpad as an input device. For textual input (i.e. 
+entering information into a search box) the user was directed to 
+select the text-inputs using the current input modality (keypress, 
+blink or click), then enter the information using the keyboard. 
+The order in-which each participant conducted the experiments was 
+randomized, as well as the order of the inputs modalities
+used to complete the experiments.
+
+\subsection{Experiment Descriptions}
+For experiment tasks that required the users to locate specific pieces
+of information on a web page, the user was verbally directed to its
+general location on the page, e.g. "left side near the bottom," or
+"in the grey box half-way down the page." The purpose of this was to
+prevent experiment completion time measurements from being drastically
+effected by people unfamiliar with a web site from spending a large 
+portion of time search for the requested information.
+
+\subsubsection{Simple Navigation Task}
+This experiment directed the user to perform a series of tasks and 
+navigations on Wikipedia (http://www.wikipedia.org). They were directed
+to navigate between several pages, perform a search task, and locate
+information on a given page. Each time the experiment was conducted (once
+for each input modality) the piece of information to collect changed.
+Directions for completion of this task were dictated to the participant
+during the tasks.
+
+\subsubsection{Complex Navigation Task}
+This experiment directed users to perform a series of navigation and
+search tasks on Amazon.com (http://www.amazon.com). Amazon's website
+is more complex and dynamic than Wikipedia, so the purpose of this 
+experiment was to give the user a more difficult navigation task.
+Similar to the \textit{Simple Navigation Task}, the tasks of this 
+experiment were dictated to the user.
+
+\subsubsection{Button Activation Sequence}
+This experiment presented the user with a sequence of four uppercase 
+letters (the target sequence) and a set of 16 buttons (four rows of 
+four buttons). Each button was labeled with an uppercase letter, 
+four of them having the letters from the sequence. The target sequence, 
+as well as the button labels and their positioning was all randomly 
+generated. As the user completed the selections in the given sequence
+the buttons would glow red (for incorrect selections), or fade to grey
+if they were correctly activated (along with the corresponding 
+letter from the target sequence). 
+
+\hl{insert figure and picture}
+
+During the course of the experiment, the size of the buttons would 
+shrink, and for each button size, three margin sizes between the buttons
+would be tested \hl{insert sizes and margin sizes here}. The user's 
+accuracy was continually calculated during the experiment and if they 
+dropped below an accuracy of \hl{insert accuracy}, or took longer than
+30 seconds to complete a selection, the experiment for that modality 
+would terminate.
+
+\subsubsection{User Focus}
+For this experiment the user was presented with two webpages and 
+directed to complete a Cloze test \hl{insert reference} on the given
+page. Each page had a sidebar of animated gif's, intended to distract
+the user. On one page, the animated gif's were faded to approximately
+10\% opacity, but would fade-in to 100\% opacity if the user gazed at
+the sidebar. The intent of the experiment was to determine if the user's
+focus was affected, and hence task completion time, was affected by
+the fading effect of the sidebar. In other words, would the user complete
+the Cloze test faster on a page with a faded distracting content which
+would fade in to view when looking at it.
 
 \subsection{Results}
 
