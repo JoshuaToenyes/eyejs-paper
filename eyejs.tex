@@ -290,11 +290,44 @@ into meaningful events within the web-browser.
 
 \subsubsection{}
 
+\subsection{EyeJS Google Chrome Extension}
+To facilitate complete web browsing capability using eye-control, we 
+developed a Google Chrome extension. The extension automatically injects
+the EyeJS JavaScript library on every page, translate the eye events to 
+mouse events, adds a keypress event to mimic a mouse click, and adds 
+visual eye-interactive controls for navigating forward and backward in
+the browser history (replicating the forward and back buttons) and 
+scrolling up and down.
 
+\hl{add figure of controls}
+
+The forward and back controls are curved semi-transparent buttons on 
+the left and right sides of the screen which slide in-and-out of view.
+The scrolling controls slide in-and-out of view in the same fashion and
+are located on the top and bottom of the screen. To trigger the 
+appearance of any of these controls, the user must only look slightly 
+off the screen edge of the control they wish to appear. For example, 
+if the user wishes to navigate "back" to the previous page, they would
+look slightly off the left side of the screen which would cause the 
+back control to appear. The user could then activate the control (by
+clicking-on, blinking, or pressing the control-key while fixated 
+on the element).
+
+The scroll controls work slightly differently, as they are of a 
+continuous nature. Instead of blinking on the scroll controls, as long
+as the user gazes as the scroll control the page will scroll in the
+corresponding direction (e.g. to scroll up, the user must only gaze
+at the "scroll-up" control). Scrolling ceases as soon as the user's 
+gaze leaves the control. To enable quickly scrolling large distances,
+the scroll speed increases linearly up to some maximum speed 
+proportional to the length of time the user has been looking at the 
+scroll control, that is, the longer the user gazes at the scroll
+control, the faster the scrolling. \hl{double-check... is it linear?}
 
 \section{Evaluation}
 The accuracy and effectiveness of the EyeJS system was tested with 
-twenty volunteers, each tasked with completing four experiments.
+twenty volunteers, each tasked with completing four experiments,
+described below.
 
 \subsection{Evaluation Equipment}
 The evaluation was conducted on a Macbook Pro (running Windows 7) 
