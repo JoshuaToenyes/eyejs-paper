@@ -91,23 +91,79 @@
 
 \maketitle
 
+
+
 \begin{abstract}
   150 words...
 \end{abstract}
 
+
+
 \keywords{eye tracking; eye events; gaze interaction; blink interaction}
+
+
 
 \category{H.5.2}{User Interfaces}{Input devices and strategies,
     Interaction styles (gaze and blinks), Screen design}
 \category{H.5.4}{Hypertext/Hypermedia}{Architectures, Navigation}
 
+
+
 \section{Introduction}
+With inexpensive consumer grade eye-tracking devices becoming available, 
+eye tracking hardware will soon be consumer-ready an array of available 
+software to use. Low-cost eye tracking is still not perfect and there 
+remains significant room for improvement. However, if web designers and 
+developers are to remain current, we need to start thinking about how 
+these devices will be used to interact with our websites and web 
+applications in the near future. Similarly, browser vendors should start seriously considering native support for these input devices.
+
+Naturally, our eyes are used as a sensory devices. Things in the 
+world don't normally move or react as a result of us gazing at them. 
+We use our eyes to gather information about our surroundings and 
+hands or other more mechanical means as tools to manipulate our 
+surroundings. So on a fundamental level, we can see why using 
+our eyes to control something is inherently unnatural. \hl{Reference 
+to support this.}
+
+While eye control may seem unnatural and may not be the preferred 
+primary form of input, there are many opportunities to use it 
+.... Nevertheless, there are some users who lack the capability to 
+
+Suppose we were given access to gaze information, in addition to mouse events and keyboard events? Suppose we stopped trying to replicate the mouse experience with gaze information, and accepted that gaze and mouse inputs are inherently different? What could we accomplish given this additional information? How could we build websites and web applications to take advantage of this information? Could we build interfaces that are entirely intent driven, instead of mechanically driven?
+
+The goal of EyeJS is threefold: first to enable generic web navigation 
+on existing websites using low-cost consumer grade eye trackers,
+second to contribute to the discussion of possible future 
+standardization of web browser eye events, and third to give web 
+developers access to eye events (for users with eye trackers) to enable
+the use of eye trackers in web apps and Node.JS based desktop 
+application.
+
 ... We developed the framework using two eye trackers, Tobii's EyeX
 tracker and The Eye Tribe's same-named eye tracker.
 
+
+
 \section{Related Work}
 
-\section{Background...}
+\hl{Generic Gaze Interaction Events for Web Browsers info...}
+
+\hl{Other references from the above paper, Midas touch, etc.}
+
+
+
+\section{Background}
+Prior to the development of EyeJS there was no open-source way for 
+web developers to gain access to eye events or user gaze position from
+the web environment.
+
+We want access to where the user is looking for research tasks, 
+inferring attention \hl{reference about eye as indicator of attention},
+and perhaps measuring user engagement.
+
+Some users could use it as an form of input... specifically 
+paraplegics and in the extreme case LIS patients.
 
 
 
@@ -178,6 +234,7 @@ is triggered when both eyes transition from being open to closed, as
 measured by their tracking availability by the eye-tracker device.
 
 
+
 \section{EyeJS Framework Components}
 EyeJS is a framework which endeavors to bring eye-interactivity and
 eye-tracking data to the web browser and Node.JS using a low-cost eye
@@ -203,6 +260,7 @@ screen x and y gaze coordinates, and eye-availability (wether the
 eye-tracker is currently tracking both, only the left or right, or
 neither eyes).
 
+
 \subsubsection{The Eye Tribe Tracker}
 The Eye Tribe tracker is compatible with Windows 7 and 8 and Apple's Mac
 OS X with Google Android OS support in-development. SDKs are provided
@@ -213,6 +271,7 @@ with this device using its TCP API. This allowed all three layers
 (eye-tracker communication, WebSocket server, and on-page JS library)
 to all be written in JavaScript. This device provides raw un-smoothed
 screen gaze coordinates.
+
 
 \subsubsection{EyeX Tracker}
 Tobii's EyeX tracker is only compatible with Windows 7 and 8 and provides
@@ -290,6 +349,7 @@ into meaningful events within the web-browser.
 
 \subsubsection{}
 
+
 \subsection{EyeJS Google Chrome Extension}
 To facilitate complete web browsing capability using eye-control, we 
 developed a Google Chrome extension. The extension automatically injects
@@ -324,12 +384,78 @@ proportional to the length of time the user has been looking at the
 scroll control, that is, the longer the user gazes at the scroll
 control, the faster the scrolling. \hl{double-check... is it linear?}
 
+
+
+\section{Inferring User Intent}
+The web is a dynamic place, potentially any DOM element can be 
+interactive. Ideally, anchor tags, buttons, form inputs, and other 
+standardized HTML elements should be used by the user to interact with a 
+website, but nothing prevents the developer from making generic tags
+such as \textbf{DIV}'s, \textbf{SPAN}'s, or other mostly semantically 
+meaningless tags interact. Indeed in some scenarios it's desirable for 
+these generic tags to be interactive. This presents a challenge 
+for EyeJS however, because we must determine which element the user 
+intends to interact with when using relatively noisy user gaze positions.
+
+What makes this more difficult is that user gaze is inherently 
+non-specific. \hl{Reference about gaze field degrees and what 
+that converts to in pixels.} In contrast, a mouse pointer is accurate
+to-the-pixel. Since user interfaces are usually developed with the 
+mouse expected to be the primary input device, we must find a way to
+emulate the pixel perfect accuracy and somehow determine which element 
+the users likely intends to interact with based on the information we
+have available \hl{go back and define what data we have}. We approach
+this problem in two steps: first by smoothing and thresholding incoming
+gaze data, then by using a weighted and biased DOM element selector to
+determine the element the user likely intends to interact with.
+
+
+\subsection{Gaze Smoothing}
+While incoming eye tracker data can be quiet good, we realized that 
+gaze coordinate smoothing was required. In our experience, even when
+the user is staring at a simple point, eye-tracker provided gaze 
+coordinates can still vary by \hl{5 to 20?} pixels frame-to-frame in
+event the best case. To combat this we implemented a simple 
+thresholded exponential smoothing algorithm. Incoming gaze coordinates
+are run through this algorithm which prevents jitter... \hl{insert 
+specific information about the algorithm and formula}.
+
+
+\subsection{Element Selection}
+After incoming gaze data has been sufficiently smoothed, we need a way
+to infer which element the user will likely intend to interact with. To
+do this, we take a series of radial samples around the smoothed gaze
+center. The element under each point is sampled using the native
+function \hl{functionName()}. In generic element selection, the 
+element sampled the most times \hl{(the most number of votes?)} will
+be determined as the interaction candidate. The radial distance 
+between sample points is fixed, as is the angle between radii. 
+This weights the center of the smoothed gaze coordinates higher 
+since there are more sample points per unit area.
+
+\hl{Insert gaze indicator graphic.}
+
+This voting approach is not always appropriate. For example, if the
+user's gaze is very close to an anchor element, it's likely they 
+intend to interact with the anchor even though there are more points 
+sampled of the paragraph. Similarly, the developer may wish to "snap"
+the user's gaze to a particular element if it get's close, thereby 
+making user interaction easier. To accommodate both of these and 
+similar scenarios, we have biased the selection algorithm to strongly 
+prefer specific tags and elements with specific attributes over generic
+elements. \hl{Insert element precedence and attributes.}
+
+\hl{paragraph and anchor diagram}
+
+
+
 \section{Evaluation}
 The accuracy and effectiveness of the EyeJS system was tested with 
 twenty volunteers, each tasked with completing four experiments,
 described below.
 
-\subsection{Evaluation Equipment}
+
+\subsection{Evaluation Hardware}
 The evaluation was conducted on a Macbook Pro (running Windows 7) 
 using a Tobii EyeX eye tracker. The web browser used was Google Chrome,
 and the Chrome plugin component of EyeJS was installed and running for
@@ -349,6 +475,7 @@ tracker did not suffer this inconvenience. However, we did
 not conduct any trials to specifically measure the performance 
 difference between the two.
 
+
 \subsection{Input Modalities}
 Three of the four experiments were accomplished three times (with 
 minor variations each time), once using a trackpad as their
@@ -361,7 +488,11 @@ select the text-inputs using the current input modality (keypress,
 blink or click), then enter the information using the keyboard. 
 The order in-which each participant conducted the experiments was 
 randomized, as well as the order of the inputs modalities
-used to complete the experiments.
+used to complete the experiments. 
+
+\hl{Supporting information about why the trackpad is a valid 
+comparison.}
+
 
 \subsection{Experiment Descriptions}
 For experiment tasks that required the users to locate specific pieces
@@ -422,11 +553,25 @@ the fading effect of the sidebar. In other words, would the user complete
 the Cloze test faster on a page with a faded distracting content which
 would fade in to view when looking at it.
 
+
 \subsection{Results}
+
+
 
 \section{Discussion}
 
+
 \subsection{Limitations}
+
+
+\subsection{Recommendations}
+
+\subsubsection{Element Density}
+
+\subsubsection{Element Size}
+
+\subsubsection{Eye Semantics}
+
 
 \subsection{Future Work}
 
@@ -442,9 +587,15 @@ continuous calibration improvement of the eye-tracker by inferring
 interactions... activate some element therefore the user was probably
 looking at that element, therefore push a calibration offset point...
 
+
+
 \section{Conclusion}
 
+
+
 \section{Acknowledgments}
+
+
 
 \balance{}
 
