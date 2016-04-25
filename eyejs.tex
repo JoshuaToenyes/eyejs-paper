@@ -73,7 +73,7 @@
 % End of preamble. Here it comes the document.
 \begin{document}
 
-\title{EyeJS: A Framework for Generic Eye-Tracking Interactivity for Web Browsers and Node.JS}
+\title{EyeJS: A Framework for Generic Eye-Tracker Interactivity in the HTML5 and JavaScript Environment}
 
 \numberofauthors{2}
 \author{%
@@ -110,72 +110,41 @@
 
 
 \section{Introduction}
-There is an explosion occurring all around us of sensing and computer input devices. Consumer touch screens, webcams, pose recognition \hl{Kinect}, sensing pens \hl{pens?}, \hl{leap motion}, and eye trackers are all relatively new devices to the consumer world, used to gather input from a device user. New patterns of interacting with computers are growing quickly, and are being rapidly adopted by users at large. User gaze is an inevitable input, and is already being used in systems such as automobile attention measurement systems \hl{reference}, and as a generic input device for computers replacing traditional devices such as the mouse \hl{reference}.
+The use new input and sensing devices in the consumer world is exploding. Touch screens, webcams, human pose recognition, digital pens, motion controllers, and eye trackers are all relatively new to the consumer world. New computer interaction patterns are quickly appearing, and are being rapidly adopted by users. User gaze is an inevitable input, and its use is being researched extensively in areas such as automobile attention measurement systems \hl{ref}, as a generic input device for computers replacing traditional devices such as the mouse \hl{ref}, and in adaptive learning environments \cite{wassermann2012generic}.
 
-Inexpensive remote eye-tracking devices are now becoming available. Tracking hardware will soon be ready for consumers with an array of available software to utilize this new dimension of user input. In the near future we are likely to see eye tracking built-in to user devices \hl{Tobii reference}, and perhaps eye-tracking will become as ubiquitous as the touchscreen. 
+Inexpensive remote eye-tracking devices are now becoming available. Tracking hardware will soon be ready for consumers' use with an array of available software to utilize this new dimension of user input. In the near future we are likely to see eye tracking built-in to user devices \hl{Tobii ref}. Perhaps one day eye-tracking will become as ubiquitous as the touchscreen or webcam. Before this occurs however, we are likely to see eye-tracking tools become widely available for people with disabilities. For these individuals, eye tracking could be used to completely replace the mouse and keyboard. Eye typing keyboards \hl{ref} and operating systems designed specifically for the eye-control may soon be available for people with disabilities outside of the research realm. Individuals who suffer from paralysis or Locked in Syndrome (LIS) \hl{ref} could soon be nearly as efficient using a computer as someone using a traditional keyboard and mouse.
 
-More urgent than as an input device for standard users however, eye tracking can be used for people with disabilities to completely replace the mouse and keyboard. On-screen eye typing keyboards \hl{ref} and operating systems designed specifically for use with eyes may soon be available for many more individuals with disabilities as eye tracker become less expensive and more available. Individuals who suffer from paralysis or Locked in Syndrome (LIS) \hl{reference} could soon be nearly as efficient using a computer as someone using a traditional keyboard and mouse.
+While remote eye trackers are becoming less expensive and more available, their accuracy still leaves room for improvement. Duplicating the accuracy of a mouse cursor with low-cost remote eye tracking is a distant goal, and one we're not yet close to achieving \hl{? accuracy ref}. This difference in accuracy pushes us to develop new and innovative interaction patterns. Ways of interacting using our eyes which are forgiving to calibration and tracker accuracy, and the nature of user gaze. Although a goal, duplicating the accuracy of a mouse cursor may not be necessary. Eye-input can be used for a variety of tasks which doesn't require pixel-perfect accuracy. Measuring user attention \hl{ref}, fatigue \hl{ref}, and interest \hl{ref} are all areas where accuracy may not be required. Inexpensive remote eye trackers may provide features in these areas in the near future, while accuracy is still being improved.
 
-EyeJS is a framework which endeavors to bring eye-interactivity and
-eye-tracking data to the web browser and Node.JS using a low-cost eye
-tracker device. 
+Interacting with and navigating web pages is a natural part of eye input problem. The web is a growing ubiquitous component of computer interaction today, indeed entire operating systems have been built revolving around the web \hl{Chrome OS ref}. If eye tracker input is to expand to the consumer world, it must first be extended to the world of the internet. The web is evolving rapidly and the complexity of web applications are increasing at a breakneck pace. Web technologies like HTML5 and the JavaScript environment has transcended the web browser entirely. Node.JS and frameworks such as Atom, Node-Webkit, and AppJS (just to name a few) \hl{ref} are extending these technologies to the desktop allowing first-class desktop applications to be built using web technologies. The mobile world has witnessed a similar trend, Phonegap and AppGyver's Steroids both allow developers to build mobile applications using web technologies. For eye tracker input to be useful, it must integrate well with these technologies and traditional browsers. It should be useful not-only for the user but also the developer. New interaction patterns should be accessible to the developers creating web sites and applications; they should have access to eye events so they can further customize their interfaces to meet their users needs.
 
-...
+We present EyeJS, a framework which brings eye-interactivity, tracking data and events to the web browser and the Node.JS environment using a low-cost remote eye trackers. EyeJS is a layered framework, allowing for a range of developer uses from collecting raw data from a locally connected eye-tracker, to complete navigation and browser control using web browser extensions. EyeJS allows developers to explicitly use eye events, or progressively enhance their existing applications and sites to use this input as an alternative or to provide additional features.
 
-While eye tracking may indeed be a useful input device, it is also equally a an important form of implicit user input. It has been shown that user attention can be measured using eye tracking \hl{ref}.
-
-...
-
-We present EyeJS, a framework ...
-
-
-
-There is still a long road ahead for eye tracker device manufacturers and software developers however, and there remains significant improvements to be made in accuracy and techniques to utilize this data in everyday tasks.
-
-
-
-Low-cost eye tracking is still not perfect and there remains significant room for improvement. However, if web designers and developers are to remain current, we need to start thinking about how these devices will be used to interact with our websites and web applications in the near future. Similarly, browser vendors should start seriously considering native support for these input devices.
-
-Naturally, our eyes are used as a sensory devices. Things in the world don't normally move or react as a result of us gazing at them. We use our eyes to gather information about our surroundings and hands or other more mechanical means as tools to manipulate our surroundings. So on a fundamental level, we can see why using our eyes to control something is inherently unnatural. \hl{Reference to support this.}
-
-While eye control may seem unnatural and may not be the preferred primary form of input, there are many opportunities to use it .... Nevertheless, there are some users who lack the capability to 
-
-Suppose we were given access to gaze information, in addition to mouse events and keyboard events? Suppose we stopped trying to replicate the mouse experience with gaze information, and accepted that gaze and mouse inputs are inherently different? What could we accomplish given this additional information? How could we build websites and web applications to take advantage of this information? Could we build interfaces that are entirely intent driven, instead of mechanically driven?
-
-The goal of EyeJS is threefold: first to enable generic web navigation on existing websites using low-cost consumer grade eye trackers, second to contribute to the discussion of possible future standardization of web browser eye events, and third to give web developers access to eye events (for users with eye trackers) to enable the use of eye trackers in web apps and Node.JS based desktop application.
-
-... We developed the framework using two eye trackers, Tobii's EyeX
-tracker and The Eye Tribe's same-named eye tracker.
+Through this paper, we will first describe related work in web technologies and eye tracking, and the field of eye tracking research in general. Then we will examine the background and and motivation for developing EyeJS, followed by a detailed description of all events and data that EyeJS provides, and an exploration of the framework and its implementation. Finally, we will reveal the results of an evaluation of our system with \hl{twenty} participants, followed by a discussion of our results and recommendations and a conclusion. 
 
 
 
 \section{Related Work}
 
-Wassermann, Hardt and Zimmermann recognized the analogous relationship between eye and mouse events in the DOM and implemented a framework similar to EyeJS. They defined the layered eye-tracker, websocket and browser-library layered approach, and defined \emph{gaze} events analogous to mouse events, but stopped short of translating those gaze events to mouse events and did not deliver a user evaluation of its effectiveness. Additionally, their system was implemented using high accuracy \hl{(?)} research grade eye trackers which are not available inexpensively to the consumer market.
+...
 
-
-
+Wassermann, Hardt and Zimmermann recognized the analogous relationship between eye and mouse events in the DOM and implemented a framework and eLearning application to use eye tracker input in the web environment. They defined the layered eye-tracker, websocket and browser-library approach, and defined \emph{gaze} events analogous to mouse events, but stopped short of translating those gaze events to mouse events and did not deliver a user evaluation of its effectiveness. Additionally, their system was implemented using high accuracy \hl{(?)} research grade eye trackers which are not available inexpensively to the consumer market. Additional patterns and adaptations must be made to allow eye tracking with low-cost hardware to work in the consumer environment.
 
 \hl{Generic Gaze Interaction Events for Web Browsers info...}
 
 \hl{Other references from the above paper, Midas touch, etc.}
 
+\hl{Work regarding use of eye tracker as implicit input device... attention and fatigue detecting systems...}
 
-
-\section{Background}
-Prior to the development of EyeJS there was no open-source way for web developers to gain access to eye events or user gaze position from the web environment.
-
-We want access to where the user is looking for research tasks, inferring attention \hl{reference about eye as indicator of attention}, and perhaps measuring user engagement.
-
-Some users could use it as an form of input... specifically paraplegics and in the extreme case LIS patients.
+\hl{What else?}
 
 
 
 \section{EyeJS DOM Events}
-EyeJS provides a number of DOM events which may be listened-for in the same manner as a native DOM event (such as \textit{mouseover}, \textit{mousemove}, \textit{mouseout}, etc.). All EyeJS events "bubble up" from the source DOM Element and behave identically to the native events adhering to the W3C's DOM Level 2 Events Recommendation \cite{domlevel1, domlevel2}, so an event listener attached to some element will be called if the corresponding event is triggered on the element itself or any of its children (this is the default behavior of native events \hl{[check if this isn't true for any events]}). Eye events provided by EyeJS are described below.
+EyeJS provides a number of DOM events which may be listened-for in the same manner as a native DOM event such as \textit{mouseover}, \textit{mousemove}, \textit{mouseout}, etc. All EyeJS events "bubble up" from the source DOM Element and behave identically to the native events adhering to the W3C's DOM Level 2 Events Recommendation \cite{domlevel1, domlevel2}, so an event listener attached to some element will be called if the corresponding event is triggered on the element itself or any of its children (this is the default behavior of native events). Eye specific events provided by EyeJS are described below.
 
 \subsection{\textbf{\textit{gaze}} Event}
-The \textit{gaze} event is fired whenever the user's gaze is over some element. This event is most analogous to a \textit{mousemove} event. Like a \textit{mousemove}, the user may actually be unaware of the element over-which the event is triggered. For example, if the user's eyes are currently executing a saccade while simultaneously being sampled by the eye-tracker, the user will be unaware of the element they are gazing at. \hl{[Lots of references about saccades and unawareness.]} For this reason the \textit{fixation} event is provided (see below).
+The \textit{gaze} event is fired whenever the user's gaze is over some element. This event is most analogous to a \textit{mousemove} event. Like a \textit{mousemove}, the user may actually be unaware of the element over-which the event is triggered. For example, if the user's eyes are currently executing a saccade while simultaneously being sampled by the eye-tracker, the user will be unaware of the element they are gazing at. \hl{Ref about saccades and unawareness.} For this reason the \textit{fixation} event is provided (see below).
 
 \subsection{\textbf{\textit{gazeleave}} Event}
 The \textit{gazeleave} event is fired on an element whenever the user's gaze transitions from the target element (the one firing the \textit{gazeleave}) to another element. The event is analogous to a \textit{mouseleave}.
@@ -193,7 +162,7 @@ This event occurs when the user's gaze has remained fixated on a single element 
 The \textit{fixationend} event is triggered on an element when the user's gaze transitions away from the subject element. This event is similar to the \textit{gazeleave} event (and indeed a \textit{gazeleave} event is triggered in tandem with a \textit{fixationend}), however it is only triggered when a full fixation occurred prior to the user's gaze departing the subject element.
 
 \subsection{\textbf{\textit{blink}} Event}
-Eyes opening and closing is a constant reality of human beings. We constantly blink, but usually quiet quickly. The purpose of the \textit{blink} event is to detect a purposeful and conscious blink. In the author's [opinion?] this was best achieved by timing a blink to be longer than an unconscious blink, but not long enough to be triggered by the eyes leaving the tracker's field of view. \hl{insert sentence about blink timing here.} Using this event, complete hands-free use of the web-browser is possible.
+Eyes opening and closing is a constant reality of human beings. We constantly blink, but usually very quickly. The purpose of the \textit{blink} event is to detect a purposeful and conscious blink. This was best achieved by timing a blink to be longer than an unconscious blink, but not long enough to be triggered by the eyes leaving the tracker's field of view. \hl{More about blink timing.} Using this event, complete hands-free use of the web-browser is possible.
 
 \subsection{\textbf{\textit{eyesopen}} Event}
 The \textit{eyesopen} event is triggered whenever both eyes transition from being untracked (or unavailable) to the eye tracker, to both being tracked (or available).
@@ -291,11 +260,11 @@ What makes this more difficult is that user gaze is inherently non-specific. \hl
 
 
 \subsection{Gaze Smoothing}
-While incoming eye tracker data can be quiet good, we realized that gaze coordinate smoothing was required. In our experience, even when the user is staring at a simple point, eye-tracker provided gaze coordinates can still vary by \hl{5 to 20?} pixels frame-to-frame in event the best case. To combat this we implemented a simple thresholded exponential smoothing algorithm. Incoming gaze coordinates are run through this algorithm which prevents jitter... \hl{insert specific information about the algorithm and formula}.
+While incoming eye tracker data can be quiet good, we realized that gaze coordinate smoothing was required. In our experience, even when the user is staring at a simple point, eye-tracker provided gaze coordinates can still vary by \hl{5 to 20?} pixels frame-to-frame in even the best cases. To combat this we implemented a simple thresholded exponential smoothing algorithm. Incoming gaze coordinates are run through this algorithm which prevents jitter... \hl{insert specific information about the algorithm and formula}.
 
 
 \subsection{Element Selection}
-After incoming gaze data has been sufficiently smoothed, we need a way to infer which element the user will likely intend to interact with. To do this, we take a series of radial samples around the smoothed gaze center. The element under each point is sampled using the native function \hl{functionName()}. In generic element selection, the element sampled the most times \hl{(the most number of votes?)} will be determined as the interaction candidate. The radial distance between sample points is fixed, as is the angle between radii. This weights the center of the smoothed gaze coordinates higher since there are more sample points per unit area.
+After incoming gaze data has been sufficiently smoothed, we need a way to infer which element the user will likely intend to interact with. To do this, we take a series of radial samples around the smoothed gaze center. The element under each point is sampled using the native function \texttt{elementFromPoint()}. In generic element selection, the element sampled the most times \hl{(the most number of votes?)} will be determined as the interaction candidate. The radial distance between sample points is fixed, as is the angle between radii. This weights the center of the smoothed gaze coordinates higher since there are more sample points per unit area.
 
 \begin{figure}
 \centering
@@ -398,7 +367,6 @@ For the \emph{Button Activation Sequence} task, user accuracy was measured and c
   }~\label{fig:keypress-accuracy}
 \end{figure}
 
-Figure \ref{fig:keypress-accuracy} shows an increase in accuracy at the smallest button size. This is due to the fact that not all users were able to complete the selection task (select a button) before the task timer ran out. \hl{Insert plot of the number of users who completed each input mode at each button size.}
 
 \section{Discussion}
 
